@@ -26,6 +26,7 @@ namespace WebApplication1.Controllers
         // GET: api/Logins
 
         [HttpGet]
+        [Authorize]
 
         public async Task<ActionResult<IEnumerable<Login>>> GetLogin()
         {
