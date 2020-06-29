@@ -13,21 +13,23 @@ namespace WebApplication1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
 
     public class LoginsController : ControllerBase
     {
         private readonly restaurantvspjContext _context;
         private IUserService _userService;
-        public LoginsController(restaurantvspjContext context, IUserService userService)
+        public LoginsController( IUserService userService)
         {
             _userService = userService;
-            _context = context;
+            _context = new restaurantvspjContext();
+         
         }
 
         // GET: api/Logins
 
         [HttpGet]
-        [Authorize]
+
 
         public async Task<ActionResult<IEnumerable<Login>>> GetLogin()
         {

@@ -54,8 +54,8 @@ namespace WebApplication1.Helper
 
             var claims = new[] {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Login1.ToString()),
-                new Claim(ClaimTypes.Role, user.IdPozice.ToString())
+                new Claim(ClaimTypes.Name, user.Login1.ToString())
+                // new Claim(ClaimTypes.Role, user.IdPozice.ToString())
             };
             var identity = new ClaimsIdentity(claims, Scheme.Name);
             var principal = new ClaimsPrincipal(identity);
