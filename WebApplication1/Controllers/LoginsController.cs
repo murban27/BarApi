@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
+using WebApplication1.Services;
 
 namespace WebApplication1.Controllers
 {
@@ -14,7 +16,7 @@ namespace WebApplication1.Controllers
     public class LoginsController : ControllerBase
     {
         private readonly restaurantvspjContext _context;
-
+        private IUserService _userService;
         public LoginsController(restaurantvspjContext context)
         {
             _context = context;
@@ -25,6 +27,17 @@ namespace WebApplication1.Controllers
         public async Task<ActionResult<IEnumerable<Login>>> GetLogin()
         {
             return await _context.Login.ToListAsync();
+        }
+        [AllowAnonymous]
+        [HttpPost("authenticate")]
+        public async Task<IActionResult> Authenticate([FromBody] Login userParam)
+        {
+            var user = await _userService.Authenticate(userParam.Login1, userParam.Password);
+
+            if (user == null)
+                return BadRequest(new { message = "Username or password is incorrect" });
+
+            return Ok(user);
         }
 
         // GET: api/Logins/5
