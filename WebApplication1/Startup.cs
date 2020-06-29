@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using WebApplication1.Helper;
 
 namespace WebApplication1
 {
@@ -28,7 +30,8 @@ namespace WebApplication1
         {
             services.AddControllers();
            services.AddDbContext<Models.restaurantvspjContext>().AddEntityFrameworkSqlServer();
-
+            services.AddAuthentication("BasicAuthentication")
+    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
