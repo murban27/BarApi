@@ -13,7 +13,7 @@ namespace WebApplication1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+
     public class LoginsController : ControllerBase
     {
         private readonly restaurantvspjContext _context;
@@ -24,6 +24,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: api/Logins
+        [Authorize("1")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Login>>> GetLogin()
         {
