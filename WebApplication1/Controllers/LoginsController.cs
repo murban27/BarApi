@@ -18,8 +18,9 @@ namespace WebApplication1.Controllers
     {
         private readonly restaurantvspjContext _context;
         private IUserService _userService;
-        public LoginsController(restaurantvspjContext context)
+        public LoginsController(restaurantvspjContext context, IUserService userService)
         {
+            _userService = userService;
             _context = context;
         }
 
