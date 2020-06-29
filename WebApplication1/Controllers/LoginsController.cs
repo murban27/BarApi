@@ -26,6 +26,7 @@ namespace WebApplication1.Controllers
         // GET: api/Logins
 
         [HttpGet]
+
         public async Task<ActionResult<IEnumerable<Login>>> GetLogin()
         {
             return await _context.Login.ToListAsync();
