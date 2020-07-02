@@ -21,7 +21,7 @@ namespace WebApplication1.Models
         public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<Pozice> Pozice { get; set; }
         public virtual DbSet<Sekce> Sekce { get; set; }
-        public virtual DbSet<Tables> Tables { get; set; }
+        public virtual DbSet<Tabless> Tabless { get; set; }
         public virtual DbSet<Vat> Vat { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -108,7 +108,7 @@ namespace WebApplication1.Models
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.TableId).HasColumnName("Table_ID");
+                entity.Property(e => e.TableId).HasColumnName("TableID");
 
                 entity.HasOne(d => d.Table)
                     .WithMany(p => p.Orders)
@@ -117,12 +117,22 @@ namespace WebApplication1.Models
                     .HasConstraintName("FK_ORDER_Id");
             });
 
+            modelBuilder.Entity<Pozice>(entity =>
+            {
+                entity.Property(e => e.Name)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<Sekce>(entity =>
             {
                 entity.HasIndex(e => e.Id)
                     .HasName("IX_Sekce");
 
-                entity.Property(e => e.Name).IsRequired();
+                entity.Property(e => e.Name)
+                    .HasColumnName("NAME")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Vat>(entity =>

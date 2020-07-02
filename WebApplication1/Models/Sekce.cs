@@ -11,7 +11,7 @@ namespace WebApplication1.Models
         }
 
         public long Id { get; set; }
-        public byte[] Name { get; set; }
+        public string Name { get; set; }
 
         public virtual ICollection<Item> Item { get; set; }
     }

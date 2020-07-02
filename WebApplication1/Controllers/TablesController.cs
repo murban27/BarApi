@@ -1,58 +1,68 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
+using Microsoft.EntityFrameworkCore.Query;
+using WebApplication1.Helper;
+using System.Collections.Immutable;
 
 namespace WebApplication1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TablesController : ControllerBase
+    public class TablessController : ControllerBase
     {
         private readonly restaurantvspjContext _context;
 
-        public TablesController(restaurantvspjContext context)
+        public TablessController(restaurantvspjContext context)
         {
             _context = context;
         }
 
-        // GET: api/Tables
+        // GET: api/Tabless
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Tables>>> GetTables()
+        public async Task<ActionResult<IEnumerable<Tabless>>> GetTabless()
         {
-            return await _context.Tables.ToListAsync();
+            var sele = (from s in _context.Tabless
+                       join b in _context.Orders on s.Id equals b.TableId
+                       select s).ToImmutableList();
+
+
+            var d = sele;
+
+            return sele.ToList();
+
+
         }
 
-        // GET: api/Tables/5
+        // GET: api/Tabless/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Tables>> GetTables(long id)
+        public async Task<ActionResult<Tabless>> GetTabless(long id)
         {
-            var tables = await _context.Tables.FindAsync(id);
+            var Tabless = await _context.Tabless.FindAsync(id);
 
-            if (tables == null)
+            if (Tabless == null)
             {
                 return NotFound();
             }
 
-            return tables;
+            return Tabless;
         }
 
-        // PUT: api/Tables/5
+        // PUT: api/Tabless/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTables(long id, Tables tables)
+        public async Task<IActionResult> PutTabless(long id, Tabless Tabless)
         {
-            if (id != tables.Id)
+            if (id != Tabless.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(tables).State = EntityState.Modified;
+            _context.Entry(Tabless).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +70,7 @@ namespace WebApplication1.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TablesExists(id))
+                if (!TablessExists(id))
                 {
                     return NotFound();
                 }
@@ -73,37 +83,37 @@ namespace WebApplication1.Controllers
             return NoContent();
         }
 
-        // POST: api/Tables
+        // POST: api/Tabless
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Tables>> PostTables(Tables tables)
+        public async Task<ActionResult<Tabless>> PostTabless(Tabless Tabless)
         {
-            _context.Tables.Add(tables);
+            _context.Tabless.Add(Tabless);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTables", new { id = tables.Id }, tables);
+            return CreatedAtAction("GetTabless", new { id = Tabless.Id }, Tabless);
         }
 
-        // DELETE: api/Tables/5
+        // DELETE: api/Tabless/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Tables>> DeleteTables(long id)
+        public async Task<ActionResult<Tabless>> DeleteTabless(long id)
         {
-            var tables = await _context.Tables.FindAsync(id);
-            if (tables == null)
+            var Tabless = await _context.Tabless.FindAsync(id);
+            if (Tabless == null)
             {
                 return NotFound();
             }
 
-            _context.Tables.Remove(tables);
+            _context.Tabless.Remove(Tabless);
             await _context.SaveChangesAsync();
 
-            return tables;
+            return Tabless;
         }
 
-        private bool TablesExists(long id)
+        private bool TablessExists(long id)
         {
-            return _context.Tables.Any(e => e.Id == id);
+            return _context.Tabless.Any(e => e.Id == id);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace WebApplication1.Models
         public DateTime? EndTime { get; set; }
         public long TableId { get; set; }
 
-        public virtual Tables Table { get; set; }
+        public virtual Tabless Table { get; set; }
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
     }
 }

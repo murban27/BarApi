@@ -24,6 +24,7 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Orders>>> GetOrders()
         {
+           
             return await _context.Orders.ToListAsync();
         }
 
