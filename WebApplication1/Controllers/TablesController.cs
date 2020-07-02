@@ -12,11 +12,11 @@ namespace WebApplication1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TablessController : ControllerBase
+    public class Tables : ControllerBase
     {
         private readonly restaurantvspjContext _context;
 
-        public TablessController(restaurantvspjContext context)
+        public Tables(restaurantvspjContext context)
         {
             _context = context;
         }
@@ -25,15 +25,10 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Tabless>>> GetTabless()
         {
-            var sele = (from s in _context.Tabless
-                       join b in _context.Orders on s.Id equals b.TableId
-                       select s).ToImmutableList();
+        return await _context.Tabless.Include("Orders").ToListAsync();
 
 
-            var d = sele;
-
-            return sele.ToList();
-
+          
 
         }
 
