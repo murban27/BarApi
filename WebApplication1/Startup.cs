@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using WebApplication1.Helper;
 using WebApplication1.Services;
 
@@ -39,7 +40,7 @@ namespace WebApplication1
             services.AddControllers()
       .AddNewtonsoftJson(options =>
       options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-  );
+  ).AddNewtonsoftJson(Options=>Options.SerializerSettings.NullValueHandling=Newtonsoft.Json.NullValueHandling.Ignore);
 
 
 
