@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace WebApplication1.Models
@@ -14,7 +15,7 @@ namespace WebApplication1.Models
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
         public long TableId { get; set; }
-
+        [JsonIgnore]
         public virtual Tabless Table { get; set; }
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
     }

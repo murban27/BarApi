@@ -30,9 +30,9 @@ namespace WebApplication1.Controllers
 
         // GET: api/Orders/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<Orders>>> GetOrders(long id)
+        public async Task <ActionResult<Orders>> GetOrders(long id)
         {
-            var orders = await _context.Orders.Include("OrderDetail").Where(x=>x.Id==id && x.EndTime==null).ToListAsync();
+            var orders = await _context.Orders.Include("OrderDetail").Where(x => x.Id == id && x.EndTime == null).FirstAsync();
 
             if (orders == null)
             {

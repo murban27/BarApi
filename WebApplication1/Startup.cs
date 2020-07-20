@@ -40,7 +40,7 @@ namespace WebApplication1
             services.AddControllers()
       .AddNewtonsoftJson(options =>
       options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-  ).AddNewtonsoftJson(Options=>Options.SerializerSettings.NullValueHandling=Newtonsoft.Json.NullValueHandling.Ignore);
+  );
 
 
 
